@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>조건문</title>
+  <link rel="icon" href="data:,">
+</head>
+<body>
+
+
+
+  <h1>scope</h1>
+  - 유효범위 (블록) <br>
+  - 참조대상 식별자 (변수, 함수의 이름과 같이 어떤 대상을 다른 대상과 구분하여 시겹ㄹ 할 수 있는 유일한 이름)을 찾아내기 위한 규칙<br>
+  - 유효범위 : 1.함수 스코프 2. 변수 스코프 <br>
+ <script>
+
+  console.log(str);
+  var str = '가';
+  console.log(variable);
+  let variable = '변수';
+   /**
+    * 전역 변수 vs 지역변수
+    * scope -> 유효범위 -> {}
+    * scope : 전역(global), function, block
+    * scope 영역 내에 선언된 변수는 지역변수
+    * scope 영역 밖 상단에 선언된 변수는 전역변수
+    * 
+    * 전역변수 -> 유효범위 내에서 참조가능, 데이터는 유효 범위 내에서만 존재
+    * 지역변수 -> 다른 유효범위에서 사용가능
+    * 
+    * 전역변수 vs 지역변수 우선순위 
+    * let name
+    * {
+    * 		let name;
+    * 		console.log(name, '전역변수와 지역변수 중 누구를 우선으로 참조할지?')
+    * }
+    */
+
+    // 호이스팅 let, const 가능
+    // 
+    let name = 'ㅇㅇㅇ'; // 전역변수
+  {
+    console.log(name); // 지역변수 우선순위
+    let name = 'ㄴㄴㄴ'; // 지역변수
+  }
+
+ </script>
+  <h1>if, else if, else</h1>
+  - if 안에 있는 조건식이 참인 경우 해당하는 if문, else if문을 실행 한다. 
+  - 조건문(if, else if)에 모두 해당하지 않으면 else에 있는 statement3이 실행된다. 
+  - else if에는 갯수 제한이 따로 없다.
+  <script type="text/javascript">
+    /*
+      if(조건식이 참){
+        statement 1 실행
+      }else if(참){
+        statement 2 실행
+      }else{
+        statement 3 실행
+      }
+      vs
+      if(){ }
+      if(){ }
+    */
+   const char = 'A';
+   if(char == 'A'){
+    console.log('A일치');
+   }else if(char == 'B'){
+    console.log('B일치');
+   }else{
+    console.log('없음');
+   }
+
+   if(char == 'A') console.log('A일치');
+   if(char == 'B') console.log('B일치');
+   if(char != 'A' && char != 'B') console.log('없음');
+
+    /* 실습1. 83점일 경우 '해당과목의 학점은 B입니다' 출력하시오 */
+    /* 100~90 A, 89~80 B, 79~70 C, 69~60 D, 59~ F */
+    // 변수0  fix 유연x
+   const score = 89;
+   let grade = '';
+   if(score > 89){
+    grade = 'A';   
+   }else if(score > 79){
+    grade = 'B';  
+   }else if(score > 69){
+    grade = 'C';  
+   }else if(score > 59){
+    grade = 'D'; 
+   }else{
+    grade = 'F'; 
+   }
+   const print = `해당과목의 학점은 ${grade} 이다`;
+   console.log(print);
+
+    /* 실습 2. database, javascript 이수점수가 다릅니다.
+              이수조건 : database(60), javascript(70) 
+              database, javascript 점수를 입력했을시
+              결과로  'database 점수: 56점 fail'
+                     'javascript 점수: 70점 pass'
+              를 출력하시오.*/
+    const subject1 = 'database';
+    const subject2 = 'javascript';
+    const subject1Score = 56;
+    const subject2Score = 70;
+    let pass = 'fail';
+    let pass2 = 'fail';
+
+    if(subject1Score >= 60){
+    pass = 'pass';  
+   }else{
+   }
+    if(subject2Score >= 70){
+    pass2 = 'pass';  
+   }else{
+   }
+   
+   const print2 = `${subject1} 점수: ${subject1Score}점 ${pass}`;
+   const print3 = `${subject2} 점수: ${subject2Score}점 ${pass2}`;
+   console.log(print2);
+   console.log(print3);
+
+
+
+
+
+
+
+    
+  </script>
+
+  <h2>switch</h2>
+	- 값 1개를 여러번 동시에 비교(같은 값) 할 수 있는 문장 <br>
+	- case 문에 삽입된 값과 변수값 일치 할 경우 : 다음 에 오는 코드 실행 <br>
+	- break; -> switch 문 중단 <br>
+	- default; -> case의 값과 일치한 내용이 없을 경우 <br>
+	
+  <script type="text/javascript">
+    /*
+    switch (변수) {
+      case value:  //if (변수 == value) => true
+        // statement 1실행
+        break; // 블록문을 빠져 나온다.
+
+      default:   //else문
+        //statement 2실행
+        break;
+    }
+    */
+
+    /* (switch) 실습1. 83점일 경우 '해당과목의 학점은 B입니다' 출력하시오 */
+    /* 100~90 A, 89~80 B, 79~70 C, 69~60 D, 59~ F */ 
+    
+   let grade2 = '';
+   const score2 = 100;
+    switch (true) {
+      case (score2 >=90):
+        grade2 = 'A' 
+        break;
+      case (score2 >=80):
+        grade2 = 'B' 
+        break;
+      case (score2 >=70):
+        grade2 = 'C' 
+        break;
+      case (score2 >=60):
+        grade2 = 'D' 
+        break;
+      default:
+        grade2 = 'F'
+        break;
+    }
+    console.log(`해당과목의 학점은 ${grade2} 이다.`)
+	</script>
+</body>
+</html>
