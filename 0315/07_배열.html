@@ -109,6 +109,14 @@
 		let spliceReturn2 = target.splice(1,0,2,2.5); 
 		console.log(target);
 		console.log(spliceReturn2);
+
+		// 배열여부 확인
+		// Array.isArray(data)
+		let exNull = null;
+		console.log(typeof exNull);
+		console.log(typeof target);
+		console.log(Array.isArray(target), '<-배열여부')
+		console.log(Array.isArray(exNull), '<-배열여부')
 	</script>
 
 	<h2>얕은복사 vs 깊은복사</h2>
