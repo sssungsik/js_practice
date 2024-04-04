@@ -16,12 +16,10 @@
     문자열이 담길 수 있도록 메서드 내의 코드를 완성하시오.
     <script type="text/javascript">
       const myObj = {
-        name : [],
-        addArr(nameInsert){
-
+        name: [],
+        addArr(nameInsert) {
           this.name.push(nameInsert);
-        }
-
+        },
       };
       myObj.addArr("홍길동");
       myObj.addArr("유관순");
@@ -30,7 +28,7 @@
       myObj.addArr("이순신김");
       myObj.addArr("이순신천");
 
-      myObj
+      myObj;
       console.log(myObj.name);
     </script>
 
@@ -43,11 +41,16 @@
         model: "K5",
         moveHistory: [],
         totalMove: 0,
-        move(distance){
+        move(distance) {
           this.moveHistory.push(distance);
           this.totalMove += distance;
-        }
+          return this;
+        },
+        getTotalMove() {
+          return this.totalMove;
+        },
       };
+
       car.move(50).move(100).move(70);
       console.log(`주행내역: ${car.moveHistory}`);
       console.log(`총 주행거리:  ${car.getTotalMove()}km`);
@@ -57,9 +60,17 @@
     실습. nObj의 getAvg메서드를 호출 하였더니 nObj의 nArr 배열 속성 요소의
     평균값이 리턴되었다. 위 문구대로 실행될 수 있도록 코드를 완성하고 결괏값을
     출력하시오.
+
     <script type="text/javascript">
       const nObj = {
         nArr: [10, 20, 30, 40, 50],
+        getAvg() {
+          let sum = 0;
+          for (const iterator of this.nArr) {
+            sum += iterator;
+          }
+          return sum / this.nArr.length;
+        },
       };
       console.log(nObj.getAvg());
     </script>
@@ -87,6 +98,16 @@
     <script type="text/javascript">
       const numObj = {
         nArr: [],
+		addN(number) {
+			this.nArr.push(number);
+			return this;
+		},
+		sum() {
+			let total = 0;
+			for (const number of this.nArr) {
+				total += number;
+			}
+		}
       };
 
       let n = numObj.addN(10).addN(10).addN(10).addN(10).addN(10).sum();
@@ -165,6 +186,7 @@
 			]
 		
 		*/
+		
       const mileageService = {
         memberList: [
           { memberId: "id001", currentMileage: 7000, memberLevel: "VIP" },
@@ -184,7 +206,37 @@
           { memberLevel: "BRONZE", ratio: 0.001 },
         ],
         history: [],
-      };
+		getMemberInfo(memberId) {
+			let memberInfo;
+			const memberList = this.memberList;
+			for (const member of memberList) {
+				if (member.memberId == memberId) {
+					memberInfo = member;
+					break;
+				}
+			}
+		},
+		addMileage(memberId, payment) {
+			const memberInfo = this.getMemberInfo(memberId);
+				if (memberInfo) {
+					
+					const memberLevel = memberInfo.memberLevel;
+					const ratio = this.getRatioByMemberLevel(memberLevel);
+					
+					let mileage = payment * ratio;
+					memberInfo.currentMileage += mileage;
+
+					const historyLog = {
+										'memberId' : memberId,
+										'status' : '누적',
+										'mileage' : mileage,
+										'date' : this.getDate()
+					}
+					this.history.push(historyLog);
+				}
+			
+      }
+	};
       mileageService.addMileage("id001", 100000);
       mileageService.addMileage("id002", 90000);
       mileageService.addMileage("id001", 110000);
@@ -198,6 +250,24 @@
       console.log(mileageService.getMemberInfo("id003"));
       console.log(mileageService.getMemberInfo("id004"));
       console.log(mileageService.history);
+
+
+	const test = {
+		userCount : 0,
+		userAdd(n) {
+			this.userCount += n;
+	
+		},
+		userMin(n) {
+			this.userCount -= n;
+		}
+	};
+	test.userAdd(3).userMin(2).userAdd(4).userMin(5);
+	console.log(test.userCount);
+	
+
+
+
     </script>
   </body>
 </html>
