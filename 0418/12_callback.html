@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>콜백 함수</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <h1>콜백 함수</h1>
+    - 콜백함수: 함수의 매개변수를 통해 다른 함수의 내부로 전달되는 함수 -
+    고차함수: 변수를 통해 함수의 외부에서 콜백함수를 전달받은 함수 - 비동기화
+    코드 작동시 데이터를 전달하기 위해 주로 쓰인다. <br />
+    - 주로 이벤트에서 사용 된다. <br />
+    - 등록해놓은 함수가 특정 이벤트의 발동에 의해 실행이 되고 실행에 결괏값을
+    등록해놓은 함수를 실행하면서 인수로 얻어진 값을 던져준다.
+
+    <script type="text/javascript">
+      const num1 = 1;
+      const num2 = 2;
+      const result = num1 + num2;
+      console.log(result);
+
+      /*
+		const printFn = () => console.log('B작업 실행');
+		function process(callbackFn){
+			setTimeout(function(){
+				console.log('A작업 실행');
+				callbackFn();
+			}, 1000);
+		}
+		process(printFn);
+		*/
+      function process(callbackFn) {
+        console.log("A작업 실행");
+        callbackFn();
+      }
+      process(function () {
+        console.log("B작업 실행");
+      });
+
+      function sumFn(callbackFn) {
+        let result = 10;
+        console.log("result 작업 처리 완료");
+        callbackFn(result);
+      }
+      sumFn(function (result) {
+        console.log("콜백함수 호출");
+        console.log(`결과값:${result}`);
+      });
+
+      // 20씩 누적될 수 있는 함수를 선언하시오.
+      function exSumFn(digit, callbackFn) {
+        setTimeout(function () {
+          digit += 20;
+          callbackFn(digit);
+        }, 1000);
+      }
+      exSumFn(0, function (result) {
+        console.log(`결과값: ${result}`);
+        exSumFn(result, function (result) {
+          console.log(`결과값: ${result}`);
+          exSumFn(result, function (result) {
+            console.log(`결과값: ${result}`);
+            exSumFn(result, function (result) {
+              console.log(`결과값: ${result}`);
+              exSumFn(result, function (result) {
+                console.log(`결과값: ${result}`);
+              });
+            });
+          });
+        });
+      });
+    </script>
+
+    <h2>이벤트와 비동기화 코드 예</h2>
+    <button type="button" id="myBtn">클릭</button>
+    클릭횟수 : <label id="cntLabel">0</label>
+    <script type="text/javascript">
+      console.log({ document });
+      const $myBtn = document.getElementById("myBtn");
+      const $cntLabel = document.getElementById("cntLabel");
+      console.log($myBtn);
+      let cnt = 0;
+      $myBtn.addEventListener("click", function () {
+        $cntLabel.textContent = cnt += 111111;
+      });
+    </script>
+
+    <h2>콜백 함수 예시</h2>
+    <input type="text" id="memberId" name="memberId" value="331" />
+    <button type="button" id="idCheck">확인</button>
+    <script type="text/javascript">
+      const $memberId = document.getElementById("memberId");
+      const $idCheck = document.getElementById("idCheck");
+
+      $idCheck.addEventListener("click", function () {
+        const memberId = $memberId.value;
+
+        // 실습 아이디 중복체크
+        // dbID 배열의 요소와 사용자 입력 아이디가
+        // 일치하면 - 아이디 중복됨
+        // 불일치 - 사용가능한 아이디입니다.
+        // input#memberId 에 사용자 미 입력시 회원 아이디 입력해주세요 경고.
+
+        const dbId = ["id01", "id02", "id03", "id04"];
+
+        if (memberId == "") {
+          alert("아이디 입력해주세요");
+        } else{
+          for (let i = 0; i <= dbId.length; i++) {
+            const dbIdList = dbId[i];
+            if (memberId == dbIdList) {
+              alert("아이디 중복됨");
+              break;
+            }
+          }
+        }
+      });
+    </script>
+
+    <h2>이벤트 콜백데이터 활용 예제</h2>
+    <div id="myText" style="position: absolute"><h1>ㅇㅇㅇㅇㅇ</h1></div>
+    <script type="text/javascript">
+      const $myText = document.getElementById("myText");
+      // document.addEventListener('mousemove', function(){
+      // 	$myText.style.left = event.x + 'px';
+      // 	$myText.style.top = event.y + 'px';
+      // });
+    </script>
+  </body>
+</html>

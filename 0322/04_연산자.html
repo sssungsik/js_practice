@@ -1,60 +1,54 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>연산자</title>
-	<link rel="icon" href="data:,">
-</head>
-<body>
-  <h1>연산자</h1>
-	<script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>연산자</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <h1>연산자</h1>
+    <script>
+      // 로그인 시 아이디가 존재하지 않으면
+      //		아이디 : 아이디 확인
+      //		비밀번호 : 비밀번호 오류
+      const inputId = "id01";
+      const inputPw = 1234;
 
-		// 로그인 시 아이디가 존재하지 않으면 
-		//		아이디 : 아이디 확인
-		//		비밀번호 : 비밀번호 오류
-		const inputId = 'id01';
-		const inputPw = 1234;
+      const dbId = "id01";
+      const dbPw = "1234";
 
-		const dbId = 'id01';
-		const dbPw = '1234';
-		
-		const loginT = (inputId == dbId) 
-						? (inputPw == dbPw) 
-						? `${inputId}님  로그인 성공`	
-						: '비밀번호 확인' 
-						: '아이디 확인'
-		console.log(loginT);
+      const loginT =
+        inputId == dbId
+          ? inputPw == dbPw
+            ? `${inputId}님  로그인 성공`
+            : "비밀번호 확인"
+          : "아이디 확인";
+      console.log(loginT);
 
-		var id = 'id123';
-		var pw = 123123;
+      var id = "id123";
+      var pw = 123123;
 
-		var uid = prompt("아이디 입력해라", "입력");
-		var upw = prompt("비밀번호 써라", "비밀번호 여기에 ");
+      var uid = prompt("아이디 입력해라", "입력");
+      var upw = prompt("비밀번호 써라", "비밀번호 여기에 ");
 
-		if (id == uid) {
-			if (pw == upw) {
-				document.write(uid + "반갑다~");
-			} else {
-				alert("비번확인해");
-				location.reload();
-			}
-		} else {
-			alert("아이디 틀림");
-			location.reload();
-		}
+      if (id == uid) {
+        if (pw == upw) {
+          document.write(uid + "반갑다~");
+        } else {
+          alert("비번확인해");
+          location.reload();
+        }
+      } else {
+        alert("아이디 틀림");
+        location.reload();
+      }
 
-
-		for (let i = 0; i <= 3; i++) {
-			for (let j = 0; j <= 2 ; j++) {
-				document.write(i + "행" + j + "열", "<br>");
-			}
-			document.write("<br>");
-			
-		}
-
-
-	</script>
-
-
-</body>
+      for (let i = 0; i <= 3; i++) {
+        for (let j = 0; j <= 2; j++) {
+          document.write(i + "행" + j + "열", "<br>");
+        }
+        document.write("<br>");
+      }
+    </script>
+  </body>
 </html>
