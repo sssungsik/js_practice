@@ -77,12 +77,70 @@ body {
     transition: ease 0.5s ;
   }
 
+  section {
+  margin: 3rem auto;
+  width: 95%;
+  max-width: 50rem;
+  background-color: rgb(249, 252, 223);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  border-radius: 6px;
+}
+
 
     </style>
 
 
   </head>
   <body>
+    <h1>Advanced JavaScript</h1>
+    <p>Working with the DOM - Exercise</p>
+
+    <section>
+      <h2>Why JavaScript?</h2>
+      <p>
+        JavaScript is a programming language which can be executed by the
+        browser, after the page was loaded.
+      </p>
+      <p>
+        With JavaScript, you, as a developer, can access, read and manipulate
+        the parsed HTML code ("the DOM") to add additional behavior and features
+        to the page.
+      </p>
+      <p>For example, you can make the below button remove this text!</p>
+      <button id = "removeBtn">Remove Paragraph</button>
+      <p>
+        Or take the next button: It adds a blue background to the first
+        paragraph.
+      </p>
+      <button id="blueBtn">Add Blue Background Color</button>
+      <p>Practice what you learned!
+
+        1) Select the two button elements and store them in two different variables.
+           - Select the first button without adding or using any "id"
+           - Select the second button by using an "id"
+        2) Add "click" event listener to both buttons (with two different functions).
+           The functions should "console.dir()" the clicked buttons.
+           - Output the first button by using the variable in which it's stored
+           - Output the second button WITHOUT using the variable in which it's stored
+        3) Now select and store the paragraphs mentioned in the text you see on the page
+           (first and third paragraph)
+           - Select BOTH paragraphs by drilling into the document and "navigating" to the
+             mentioned elements
+           - If you struggle with DOM drilling, use "ids" instead but watch the solution!
+        4) Change the functions from (2) such that:
+           - The first button removes the third paragraph (i.e. the [P] prior to it)
+           - The second button changes the background color of the first paragraph to blue
+        5) Solve (4) both by changing the "inline styles" as well as by adding CSS classes
+           Note: You'll have to add those classes to the styles.css file first!</p>
+    </section>
+
+
+
+
+
+
+
     <div class="sample">
       <form>
       <label for="nickname-input">사용할 닉네임 입력</label><br>
