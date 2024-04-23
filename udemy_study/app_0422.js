@@ -54,10 +54,10 @@ function btn1Click(){
 }
 btn1.addEventListener('click', btn1Click);
 // - 저장된 변수를 사용하지 않고 두 번째 버튼을 출력합니다. 
-function btn2Click(){
-    console.dir(document.getElementById('blueBtn'));
+function btn2Click(event){
+    console.dir(event.target);
 }
-blueBtn.addEventListener('click', btn2Click);
+btn2.addEventListener('click', btn2Click);
 
 // 3) 이제 페이지에 표시되는 텍스트에 언급 된 단락을 선택하여 저장하십시오. (첫 번째 및 세 번째 단락) 
 // - 문서를 드릴로 드릴하고 "탐색"하여 두 단락을 모두 선택합니다. 언급 된 요소 
