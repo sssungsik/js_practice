@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>내장객체</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <h1>내장객체</h1>
+    - 문자, 날짜, 배열, 수학 개체 등이 있다. <br />
+    - 주로 new 연산자를 활용하여 객체화 한다. <br />
+
+    <h2>날짜 내장객체</h2>
+    - 날짜 정보를 얻거나, 날짜 정보에 관련된 작업을 할때 쓰인다. <br />
+    - 날짜의 정보는 사용자의 컴퓨터의 시간을 참조한다. <br />
+    - 구문 : let date = new Date(); <br />
+    - 1000의 정수값은 1초이다. <br />
+
+    <script type="text/javascript">
+      const date1 = new Date();
+      const date2 = new Date("2024-04-19");
+      const date3 = new Date(2024, 5, 35);
+      const date4 = new Date("2024-04-19 09:00:00");
+      console.log(date1);
+      console.log(date2);
+      console.log(date3);
+      console.log(date4);
+
+      // 날짜 일 간격
+      const diff = (date2 - date1) / 1000 / 60 / 60 / 24;
+      console.log(diff);
+    </script>
+
+    <h3>날짜객체 메서드 종류</h3>
+    <script type="text/javascript">
+      // 실습1. 오늘 날짜를 '2024년 00월 00일 (요일)' 이라고 출력하시오.
+
+      function formatDate(insertDate) {
+        const fullYear = insertDate.getFullYear();
+        const month = insertDate.getMonth() + 1;
+        const date = insertDate.getDate();
+        const day = insertDate.getDay();
+        const dayArr = ["일", "월", "화", "수", "목", "금", "토"];
+        const result = `${fullYear}년 ${month}월 ${date}일 ${dayArr[day]}요일`;
+        return result;
+      }
+      console.log(formatDate(date1));
+
+      // 실습2. 오늘 날짜에서 25일이 지난 날짜를 위의 포맷 방식으로 출력하시오.
+
+      const addDate = new Date();
+      addDate.setDate(date1.getDate() + 25);
+      console.log(formatDate(addDate));
+    </script>
+
+    <h2>수학 객체</h2>
+    - 난수, 반올림, 내림, 올림, 절댓값 등의 기능을 가진 객체
+    <script>
+      let num = -2.1234;
+      let result = 0;
+
+      // 절대값 반환하는 메소드 : abs
+      result = Math.abs(num);
+      console.log(result);
+
+      // 최대값 반환하는 메소드 : max
+      result = Math.max(1, 2, 3, 4);
+      console.log(result);
+      const numArr = [1, 2, 3, 4];
+      result = Math.max(...numArr);
+      console.log(result);
+
+      // 최소값 반환하는 메소드 : min
+      result = Math.min(...numArr);
+      console.log(result);
+
+      // 거듭제곱값 반환 : pow
+      result = Math.pow(2, 3); // 2의 3승
+      console.log(result);
+      console.log(2 ** 3); // 2의 3승
+
+      // 난수 추출
+      result = Math.random();
+      console.log(result); // 0과 1사이값 중 난수 발생
+
+      // 소수점 반올림
+      result = Math.round(num);
+      console.log(result);
+      result = Math.round(num * 10) / 10;
+      console.log(result);
+      result = Math.round(num * 100) / 100;
+      console.log(result);
+
+      // 소수점 올림
+      result = Math.ceil(num);
+      console.log(result);
+
+      // 소수점 내림
+      result = Math.floor(num);
+      console.log(result);
+      result = parseInt(num);
+      console.log(result);
+
+      // 난수 추출 Math.random() 1~45 1게임 : 6
+      // 실습1. 로또 번호 추출 (중복번호 없이)
+      // 1game 당 1000원 = 10000 입력 시 10게임 나오게
+
+      console.dir("------------실습1-------------");
+      var lotto = [];
+      for (var i = 0; i < 6; i++) {
+        var num1 = Math.floor(Math.random() * 45) + 1;
+        for (var j in lotto) {
+          if (num1 == lotto[j]) {
+            num1 = Math.floor(Math.random() * 45) + 1;
+          }
+        }
+        lotto.push(num1);
+      }
+      //오름차순으로 숫자 정렬
+      lotto.sort(function (a, b) {
+        return a - b;
+      });
+
+      document.write("<h1>----------로또 번호 ---------</h1>");
+      document.write("<h1>" + i + "번 게임 : " + lotto + "</h1><br>");
+    </script>
+
+    <h2>배열 객체</h2>
+    - 하나의 저장소의 공간을 나누어 데이터를 저장하는 객체 <br />
+    - 배열의 요소의 주소는 index이며, 0번 부터 시작한다. <br />
+    - 배열객체의 메서드 종류 <br />
+    1) push() -> 인덱스 마지막 부터 데이터 저장과 인덱스 자동 증가 <br />
+    2) unshift() -> 인덱스 0번째에 데이터 저장 (데이터 밀림) <br />
+    3) pop() - > 배열의 마지막 번째 데이터 제거 <br />
+    4) shift() -> 인덱스 0번째 데이터 제거 (데이터 당김) 5) unshift() : 배열의
+    처음 요소로 값을 삽입하는 메소드<br />
+    6) splice(삭제를 시작할 인덱스, 삭제할 요소수) : 특정배열 요소 삭제 <br />
+    7) Array.isArray(배열 변수명) : 배열 여부 확인<br />
+    <script>
+      const arr = [1,2,3,4];
+      const obj = {name : 'ddd'};
+
+      // 배열 여부확인 Array.isArray(데이터)(배열일 경우: true반환, 배열이 아닐경우: false반환)
+      result = Array.isArray(arr);
+      console.log(result);
+      result = Array.isArray(obj);
+      console.log(result);
+
+      // 배열 요소 인덱스반환 [해당배열].indexOf(찾으려는 요소값)
+      // 요소가 있으면 : 배열 요소의 인덱스 반환
+      // 요소가 없으면 : -1 반환
+      result = arr.indexOf(3);
+      console.log(result);
+      result = arr.indexOf(5);
+      console.log(result);
+
+      let searchValue = 4;
+      if (arr.indexOf(searchValue) > -1) {
+      	console.log(`${searchValue} 는 arr요소에 있다`);
+
+      }
+
+
+
+
+
+      // push and pop
+      // stack 자료구조 사용(last in first out)
+      result = arr.push(5);
+      console.log(result);
+      console.log(arr);
+
+      result = arr.pop(); // 마지막 요소 삭제
+      console.log(arr);
+
+      // unshift and shift
+      result = arr.unshift(-1,0);
+      console.log(arr);
+
+      result = arr.shift(); // 첫번째 요소 삭제
+      console.log(arr);
+
+      // concat : 2개의 배열을 하나로 합치고 새로운 배열을 반환(순수함수)
+      const concatArr1 = [1,2,3];
+      const concatArr2 = [4,5,6];
+      result = concatArr1.concat(concatArr2);
+      console.log(result);
+      console.log(concatArr1, concatArr2); // 기존 배열 변동 없음 (순수함수)
+
+      // splice (시작할 인덱스, 제거할 요소수, 추가할 요소...)
+      // 메소드 호출후 제거한 요소가 담긴 배열로 반환
+      result = arr.splice(2,0,5); // 2번주소 배열 0개를 삭제하고 그 곳에 5를 삽입
+      console.log(arr);
+
+      // slice (복사를 시작할 인덱스, 종료 인덱스 미만)
+      result = arr.slice(0,2); // 0번배열에서 2번배열까지
+      console.log(result); // 0,1 배열만 해당 (2번배열 X)
+      console.log(arr); // 기존 배열 변동 없음
+      result = arr.slice(0); // 전체 복사
+      console.log(result);
+
+      // 인수가 없을 시 새로운 배열을 반환하여 요소 복사
+      // 복사하는 요소가 객체타입일 경우 얕은 복사
+      result = arr.slice();
+      console.log(result);
+
+      // flat 배열의 평탄화 (인수가 없을 시에는 default 1)
+      const flarArr = [1,[2,3,[4,[5]]]];
+      result = flarArr.flat();
+      console.log(flarArr);
+      console.log(result);
+
+      result = flarArr.flat(2);
+      console.log(result);
+
+      result = flarArr.flat(Infinity); // 모든 값
+      console.log(result);
+
+      //reverse 배열의 요소 순서를 거꾸로 바꾼후 반환
+      result = arr.reverse();
+      console.log(arr);
+
+      //고차 함수 계열
+      //sort -1:작은수, 0:정렬안함, +1: 큰수
+      const sortArr1 = [124,5,-1,3,2];
+      sortArr1.sort((a,b) => a-b); // 오름차순
+      console.log(sortArr1);
+
+      sortArr1.sort((a,b) => b-a);
+      console.log(sortArr1);
+
+      //문자일 경우
+      const sortArr2 = ['가','나','궥','S','崔', '★', 'English'];
+      sortArr2.sort(); // 오름차순
+      console.log(sortArr2);
+
+      sortArr2.reverse(); // 내림차순 (reverse)
+      console.log(sortArr2);
+
+      // map 요소 수 대로 순회하면서 콜백함수를 실행
+      // return 된 값을 새로운 배열에 담아 반환
+      const mapArr1 = [1,2,3,4];
+      mapArr1.map(function(element,index,arr) {
+      	console.log(`요소 : ${element}, 인덱스 : ${index}, 배열 : ${arr}`);
+      });
+
+      const mapResult1 = mapArr1.map(element => element *2);
+      console.log(mapResult1);
+
+      const mapArr2 = ['이동근', '이희상', '고윤영', '송영호', '박중연'];
+      const mapResult2 = mapArr2.map(element => `${element}님`);
+      console.log(mapResult2);
+      // map 구현 : 요소 순회시 콜백함수를 실행한 결과값을 새로운 배열에 담아 반환하는 메소드
+      Array.prototype.mapLike = function(callback) {
+      	// 새 배열 생성
+      	const n = [];
+      	for(let i=0;i<this.length;i++){
+      		console.log(this[i], `------${i} 번째 요소`);
+      		n.push(callback(this[i], i, this));
+      	}
+      	// 생성한 배열 반환
+      	return n;
+      }
+
+      const mapArr3 = ['최성식','최성철'].mapLike(name => `${name}님`);
+      console.log(mapArr3);
+
+
+      // filter 콜백함수의 return ture(해당요소반환), false(반환하지 않음)
+      console.log('--------filter--------');
+      const filterArr = [10,3,5,20,30,40];
+      const filterResult1 = filterArr.filter(function(element, idx, arr){
+      	console.log(`요소 : ${element}, 인덱스 : ${idx}, 배열 : ${arr}`);
+      	return true;
+      });
+      const filterResult2 = filterArr.filter(function(element, idx, arr){
+      	console.log(`요소 : ${element}, 인덱스 : ${idx}, 배열 : ${arr}`);
+      	return false;
+      });
+      console.log(filterResult1);
+      console.log(filterResult2);
+      // filter 구현 (짝수반환)
+      Array.prototype.filterLike = function(callback){
+      	const n = [];
+      	for(let i=0;i<this.length;i++){
+      		if(callback(this[i],i,this)) n.push(this[i]);
+      	}
+      	return n;
+
+      }
+      const filterResult3 = filterArr.filterLike(element => element % 2 ==0);
+      console.log(filterResult3);
+
+
+      // foreach 배열의 요소만큼 반복구문
+      // 배열이 가지고 있는 요소만큼 콜백함수를 호출하는 메소드
+      console.log('--------foreach--------');
+      const forEachArr = [1,2,3,4];
+
+      forEachArr.forEach(function(element, index, arr){
+      	console.log(`${index}번 -  (${arr})의`, element );
+      });
+
+      forEachArr.forEach(function(element){
+      	console.log(element);
+      });
+
+
+
+
+
+
+
+
+
+
+      const exReduce = [100];
+      Array.prototype.reduceLike = function(callback, init) {
+      	let acc = init;
+      	for (let i = 0; i < this.length; i++) {
+      		if(i == 0 && acc === undefined) {
+      			acc = this[i];
+      		} else {
+      			acc = callback(acc, this[i],i,this);
+
+      	}
+      	return acc;
+      }
+
+      const exResult1 = exReduce.reduce(()=>{});
+      const exResult2 = exReduce.reduceLike(()=>{});
+      console.log(exResult1);
+      console.log(exResult2);
+    </script>
+
+    <h2>문자열 객체</h2>
+    - 문자열을 생성하면 문자열 객체이다. - 문자열을 생성하면 문자열 객체의
+    메서드를 사용 할 수 있다.
+    <script type="text/javascript">
+      let exStr1 = new String("ksmart51");
+      let exStr2 = "ksmart51";
+      console.log(exStr1);
+      console.log(exStr2);
+
+      // indexOf : 찾으려는 문자열의 첫번째 인덱스번호를 반환한다.
+      let exStr3 = "51기 경력자같은 최성식입니다";
+      let exStr3Result = exStr3.indexOf("50");
+      console.log(exStr3Result);
+      console.log(exStr3Result > -1);
+
+      // lastIndexOf : 찾으려는 문자열의 대상 문자열 뒤부터 찾아
+      //              인덱스번호 반환
+      let exStr4 = "51기 경력자같은 최성식입니다";
+      let exStr4Result = exStr4.lastIndexOf("51");
+      console.log(exStr4Result);
+
+      // match 문자열을 왼쪽부터 찾을 문자와 일치하는 문자를 찾아 찾은 문자를 반환
+	  let exStr5 = "51기 경력자같은 최성식입니다";
+      let exStr5Result = exStr5.match(/51기/gi);
+      console.log(exStr5Result);
+
+      // replace 문자열을 왼쪽부터 검색한뒤 두번째 인수값으로 교체
+	  let exStr6 = "51기 경력자같은 최성식입니다 51기";
+      let exStr6Result = exStr6.replace('51기','오십일기');
+      let exStr6Result2 = exStr6.replaceAll('51기','오십일기');
+      console.log(exStr6Result);
+      console.log(exStr6Result2);
+
+      // search 문자열에서 왼쪽부터 찾을 문자와 일치하는 문자를 찾아
+      // 제일 먼저 일치하는 인덱스번호를 반환합니다.
+	  let exStr7 = "51기 경력자같은 최성식입니다 51기";
+      let exStr7Result = exStr7.search('51');
+      console.log(exStr7Result);
+     
+      // subString(시작할 인덱스, 종료 인덱스)
+	  let exStr8 = "51기 경력자같은 최성식입니다 51기";
+      let exStr8Result = exStr8.substring(4,7);
+      console.log(exStr8Result);
+
+      // substr(시작할 인덱스, 추출할 문자갯수)
+	  let exStr9 = "51기 경력자같은 최성식입니다 51기";
+      let exStr9Result = exStr9.substr(4,7);
+      console.log(exStr9Result);
+
+      // split(구분자) 문자 ->구분자를 기준으로 새로운 배열 반환
+	  let exStr10 = "51기 경력자같은 최성식입니다 51기";
+      let exStr10Result = exStr10.split('');
+      let exStr10Result2 = exStr10.split(' ');
+      let exStr10Result3 = exStr10.split();
+      console.log(exStr10Result);
+      console.log(exStr10Result2);
+      console.log(exStr10Result3);
+
+      // String은 유사배열이기에 length 프로퍼티를 가진다.
+	  let exStr11 = "51기 경력자같은 최성식입니다 51기";
+      console.log(exStr11.length);
+
+      // trim : 좌 우 해당되는 공백만 제거
+	  let exStr12 = "    51기 경력자같은 최성식입니다 51기       ";
+	  let exStr12Result = exStr12.trim();
+	  console.log(exStr12Result);
+
+      // 전체 문자열의 공백 제거
+
+	  /* replaceAll 방법*/
+	  let exStr13 = "    51기 경력자같은 최성식입니다 51기       ";
+	  let exStr13Result = exStr13.replaceAll(' ','');
+	  console.log(exStr13Result);
+
+	  /* replaceAll 정규식 방법*/
+	  let exStr14 = "    51기 경력자같은 최성식입니다 51기       ";
+	  let exStr14Result = exStr14.replaceAll(/\s/g,'');
+	  console.log(exStr14Result);
+
+	  /* split, join*/
+	  let exStr15 = "    51기 경력자같은 최성식입니다 51기       ";
+	  let exStr15Result = exStr15.split(' ').join('');
+	  console.log(exStr15Result);	  
+
+    </script>
+  </body>
+</html>
