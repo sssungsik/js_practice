@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>브라우저 객체 실습</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <h1>브라우저 객체 실습</h1>
+
+    <h2>실습1</h2>
+    실습. 1초마다 n이라는 변수에 값이 1씩 증가하는 코드를 작성하시오. 또한
+    10초마다 사용자에게 진행여부를 확인하고 진행시에는 n값 증가 진행 취소시 n값
+    진행 중단을 되도록 하시오.
+
+    <!-- <script type="text/javascript">
+      let n = 0;
+      let counter = 0;
+
+      const intervalFn = setInterval(function () {
+          console.log(++n);
+
+          counter++;
+          if (counter === 10) {
+              counter = 0;
+              const isOk = confirm("계속할까?");
+              if (isOk) {
+                  console.log('계속합니다..');
+              } else {
+                  clearInterval(intervalFn);
+              }
+          }
+      }, 1000);
+    </script> -->
+
+    <h2>실습2</h2>
+    실습. times h3태그의 텍스트노드에 1초마다 현재 시간을 출력하도록 하시오.
+    (출력양식 : AM 10시 28분 30초)
+    <h3 id="times"></h3>
+    <h3 id="bonus"></h3>
+    <script type="text/javascript">
+      function updateTime() {
+        let ampm = "";
+        const now = new Date();
+        let hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+        const sec = String(now.getMilliseconds()).padStart(3, "0");
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const date = now.getDate();
+        const day = now.getDay();
+        if (parseInt(hours) > 12) {
+          ampm = "PM";
+        } else {
+          ampm = "AM";
+        }
+
+        if (parseInt(hours) >= 12) {
+          hours = hours % 12;
+          if (hours < 10) {
+            hours = `0${hours}`;
+          }
+        } else {
+        }
+
+        const currentTime = `${ampm} ${hours}시 ${minutes}분 ${seconds}초`;
+        const milSec = `보너스 : ${year}년 ${month}월 ${date}일 ${sec}밀리초 `;
+        document.querySelector("#times").textContent = currentTime;
+        document.querySelector("#bonus").textContent = milSec;
+      }
+
+      setInterval(updateTime, 1000);
+      setInterval(updateTime, 1);
+    </script>
+  </body>
+</html>

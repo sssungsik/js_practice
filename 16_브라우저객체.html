@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
+    <link id="theme-style" rel="stylesheet" href="light.css" />
+    <title>브라우저객체(BOM)</title>
+    <style>
+      body {
+        transition: background-color 0.5s, color 0.5s;
+      }
+      .dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+      }
+      .light-mode {
+        background-color: #ffffff;
+        color: #000000;
+      }
+    </style>
+  </head>
+  <body class="light-mode">
+    <button id="toggle-button">Toggle Dark/Light Mode</button>
+    <script>
+      const toggleButton = document.getElementById("toggle-button");
+      const body = document.body;
+
+      toggleButton.addEventListener("click", () => {
+        if (body.classList.contains("light-mode")) {
+          body.classList.replace("light-mode", "dark-mode");
+        } else {
+          body.classList.replace("dark-mode", "light-mode");
+        }
+      });
+    </script>
+
+    <h1>브라우저 객체</h1>
+    - 최상위 객체는 window 객체이다. <br />
+    - window 하위 객체 <br />
+    - document(문서영역) <br />
+    - location(주소창) <br />
+    - history(방문기록, 페이지이동) <br />
+    - navigator(사용자의 브라우저 정보, 운영체제의 정보) <br />
+    - screen(사용자 디바이스 정보) <br />
+    - window 식별자는 생략이 가능하다. <br />
+
+    <h2>window 메서드</h2>
+
+    <script type="text/javascript">
+      console.log({ window });
+      console.log({ document });
+      console.log(closed);
+    </script>
+
+    <h3>open(), close()</h3>
+    - open('새창 주소', '창 생성 방식', '새창 식별자(이름)', '새창 옵션') ->
+    새창 <br />
+    - close() -> 창 닫기 <br />
+    - 새창 생성 방식<br />
+    1. _self -- 현재 탭에서 생성 2. _blank -- 새 창 생성 - 새창의 옵션 <br />
+    1. width = '픽셀값' -- 윈도우의 가로 너비를 설정<br />
+    2. height = '픽셀값' -- 윈도우의 세로 너비를 설정<br />
+    3. left = '픽셀값' -- 윈도우의 왼쪽 위치를 설정<br />
+    4. top = '픽셀값' -- 윈도우의 위쪽 위치를 설정<br />
+    5. location = (yes or no) -- 윈도우 주소창 노출 여부<br />
+    6. scrolbars = (yes or no) -- 윈도우 스크롤바 노출 여부<br />
+    7. menubar = (yes or no) -- 윈도우 메뉴바 노출 여부<br />
+    8. toolbar = (yes or no) -- 윈도우 툴바 노출 여부<br />
+    9. status = (yes or no) -- 윈도우 상태줄 노출 여부<br />
+    10. resizable = (yes or no) -- 윈도우 사이즈변경 가능 여부<br />
+    <script type="text/javascript">
+      // target(_self : 현재창 , _black : 새 창)
+      // window.open(
+      //     "https://www.naver.com",
+      //     "_blank",
+      //     "left=100px,top=50px, width=100px, height=120px, location = no, scrolbars = no, menubar = no, toolbar = no,  resizable = no, status = no"
+      //   );
+      //const name = prompt("니이름뭐냐?", "니이름");
+      // console.log(name);
+    </script>
+
+    <h3>alert</h3>
+    - 사용자에게 경고문구 혹은 알림문구 띄울때 사용되는 메서드
+
+    <script type="text/javascript"></script>
+
+    <h3>prompt</h3>
+    - 사용자에게 하나의 문자열의 값을 받을 수 있는 메서드
+    <script type="text/javascript">
+      // 실습1. 이름과 javscript 점수, DATABASE 점수를 입력받아서
+      //       이름: 홍길동, JAVASCRIPT점수: 80점, DATABASE : 80점, 평균: 80점
+      //   const name = prompt('이름을 말하세요','홍길동');
+      //     const javascriptGrade = prompt('자바스크립트 점수','0');
+      //     const databaseGrade = prompt('데이터베이스 점수','0');
+      //     const avg = (parseInt(javascriptGrade) + parseInt(databaseGrade)) /2;
+      // console.log(`이름 : ${name}, JAVASCRIPT 점수 : ${javascriptGrade}, DATABASE 점수 : ${databaseGrade}, 평균 : ${avg}`);
+    </script>
+
+    <h3>confirm</h3>
+    - 사용자에게 진행여부를 확인할 수 있는 메서드
+
+    <script type="text/javascript">
+      // const isDel = confirm('삭제?');
+      // console.log(isDel);
+      // if(isDel) {
+      //     alert('삭제됨.')
+      // } else {
+      //     alert('취소됨.')
+      // }
+    </script>
+
+    <h3>setInterval, clearInterval</h3>
+    - 정해진 시간 주기 마다 등록된 함수를 실행
+    <input type="text" id="test" />
+    <script type="text/javascript">
+      let i = 0;
+      // setInterval : 콜백함수 등록
+      // clearInterval : 등록된 콜백함수 해제
+      //   const intervalFn = setInterval(function () {
+      //     console.log(++i);
+      //     if (i == 4) clearInterval(intervalFn);
+      //   }, 1000);
+    </script>
+
+    <h3>setTimeout, clearTimeout</h3>
+    - 정해진 시간 후에 등록된 함수 실행
+    <script type="text/javascript">
+      console.log(`A코드 실행`);
+      const Fn = setTimeout(function () {
+        console.log("1초후 실행되는 콜백함수");
+        console.log(`B코드 실행`);
+      }, 1000);
+      clearTimeout(Fn);
+      console.log(`C코드 실행`);
+    </script>
+
+    <h2>location</h2>
+    - 현재 url(주소)의 정보를 가지고 있는 객체 <br />
+    - 프로토콜, 포트, 호스트 등의 정보를 가지고 있다. <br />
+    - location.href = '주소 (절대 경로 혹은 상대 경로)' 값 대입시 대입된 경로로
+    이동
+
+    <button id="btn" type="button">구글</button>
+    <script type="text/javascript">
+      console.log({ location });
+      const $btn = document.querySelector("#btn");
+      $btn.onclick = function () {
+        console.log("클릭");
+      };
+      $btn.addEventListener("click", () => {
+        const currentFontSize = parseFloat(
+          window.getComputedStyle($btn).fontSize
+        );
+        const currentPadding = parseFloat(
+          window.getComputedStyle($btn).padding
+        );
+
+        // 폰트 크기와 패딩을 1px씩 증가시킵니다.
+        $btn.style.fontSize = `${currentFontSize + 0.1}px`;
+        $btn.style.padding = `${currentPadding + 0.1}px ${
+          currentPadding * 1
+        }px`;
+      });
+    </script>
+
+    <h2>history</h2>
+    - 방문이력의 정보를 가진 객체
+    <button id = 'backBtn' type="button">뒤로</button>
+    <button id = 'forwardBtn' type="button">앞으로</button>
+    <button id = 'goBtn' type="button">history.go</button>
+    <script type="text/javascript">
+        const $backBtn = document.querySelector('#backBtn');
+        const $forwardBtn = document.querySelector('#forwardBtn');
+        const $goBtn = document.querySelector('#goBtn');
+        $backBtn.onclick = function(){
+            history.back();
+        }
+        $forwardBtn.onclick = function(){
+            history.forward();
+        }
+        $goBtn.onclick = function(){
+            history.go(-2);
+        }
+
+    </script>
+
+    <h2>navigator</h2>
+    - os 및 브라우저 정보를 가지고 있는 객체<br />
+    - appCodeName: 클라이언트의 브라우저 코드명 반환<br />
+    - appName: 클라이언트의 브라우저 이름을 반환<br />
+    - userAgent: 클라이언트의 브라우저와 운영체제 종합 정보를 제공.<br />
+    <script type="text/javascript">
+        console.log({navigator});
+    </script>
+
+    <h2>screen</h2>
+    - 디바이스의 크기 정보<br />
+    - width: 화면의 너빗값을 반환<br />
+    - height: 화면의 높잇값을 반환<br />
+    - availWidth: 작업표시줄을 제외한 화면의 너빗값 반환<br />
+    - availHeight: 작업표시줄을 제외한 화면의 높잇값 반환<br />
+    - colorDepth: 사용자 모니터가 표현 가능한 컬러 bit를 반환<br />
+    <script type="text/javascript">
+        console.log({screen});
+        console.log(`당신의 사이즈 : ${screen.width}x${screen.availHeight}`);
+    </script>
+
+    <h2>document</h2>
+    - html 문서의 정보를 가지고 있는 객체
+    <script type="text/javascript">
+        console.log({document});
+    </script>
+  </body>
+</html>
