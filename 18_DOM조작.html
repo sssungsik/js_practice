@@ -6,6 +6,24 @@
     <title>DOM 조작</title>
 </head>
 <br>
+<h1>실습</h1>
+<form action="#">
+    <input type="text" name="mName" id="mName" value="기본 val 값!">
+    <button type="reset" onclick="alert('d')"><strong>초기화</strong></button>
+   <button type="btn" id="formBtn">확인</button>
+</form>
+<script>
+    const $formBtn = document.getElementById('formBtn');
+    $formBtn.onclick = function () {
+        const $mName = document.getElementById('mName');
+        const attributeVal = $mName.attributes.value.value;
+        const propertVal = $mName.value;
+        alert(attributeVal, '태그의 value 기본값');
+        alert(propertVal, '입력value값');
+        
+    }
+
+</script>
     <h1>DOM 조작</h1>
     - 새로운 노드를 생성하여 DOM에 추가하거나 기존 노드를 삭제 또는 교체하는 것
     
@@ -16,11 +34,48 @@
     <div id="ksmart">
         한국스마트정보교육원<span>개발자 51기</span>
     </div>
+    <!-- 실습 -->
+    <!--
+    li태그 
+    • 301호
+    • 302호
+    • 교직원실
+    • 행정실
+    • 상담실
+    li태그
+    -->
+
 
     <div id="exDiv"></div>
     
     <script>
-       
+    const $ksmart = document.getElementById('ksmart');
+    console.log({$ksmart});
+    console.log($ksmart.innerHTML);
+
+    let html = '최성식';
+    html += `<button>`;
+    html += `입니다`;
+    html += '</button>';
+    $ksmart.innerHTML = html;
+    
+    // 방법 1
+    
+    // const $exDiv = document.getElementById('exDiv');
+    // $exDiv.innerHTML = '<li>301호</li><li>302호</li><li>303호</li><li>교직원실</li><li>행정실</li><li>상담실</li>';
+
+
+    // 방법2
+    const $exDiv = document.getElementById('exDiv');
+    let html2 = '<li>301호</li> \n';
+        html2 += '<li>302호</li>\n';
+        html2 += '<li>교직원실</li>\n';
+        html2 += '<li>행정실</li>\n';
+        html2 += '<li>상담실</li>\n';
+    $exDiv.innerHTML = html2;
+    console.log($exDiv.innerHTML);
+        
+
     </script>
 
     <h2>textContent</h2>
@@ -37,7 +92,10 @@
         </div>
     </div>
     <script>
-        
+        const $ks51 = document.getElementById('ks51');
+        console.log($ks51.textContent);
+
+        $ks51.textContent = html; // 할당 시 마크업 무시
     </script>
     
     <h2>nodeValue</h2>
@@ -50,7 +108,10 @@
     </div>
 
     <script>
-
+    const $sText = document.getElementById('sText');
+    console.log($sText.textContent);
+    console.log($sText.firstChild.nodeValue);
+    $sText.firstChild.nodeValue += '51기입니다';
     </script>
 
     <h2>노드생성과 추가</h2>
@@ -67,13 +128,48 @@
     - after(노드, 문자열): 해당 노드 이후에 삽입 <br>
 
     <div>
-        <label>배려와 존중이 넘치는 한국스마트정보교육원</label>
+        <label>배려와 존중이 넘치는 한국스마트정보교육원</label> <!-- : target -->
+         <!-- : before -->
         <ul id="ksmartTeamUl">
             <li>가이드: 이형열 교수님</li>
-            
+            <li></li>    
         </ul>
     </div>
     <script>
+        const $ksmartTeamUl = document.getElementById('ksmartTeamUl');
+        const $newLiEle1 = document.createElement('li');
+        const $newTxtEle1 = document.createTextNode('팀원 : 1');
+        $newLiEle1.appendChild($newTxtEle1);
+        console.log($newLiEle1);
+        $ksmartTeamUl.append($newLiEle1);
+
+        const $newLiEle2 = document.createElement('li');
+        $newLiEle2.textContent = '팀원 : 2';
+        $ksmartTeamUl.appendChild($newLiEle2);
+
+        const $newLabel1 = document.createElement('label1');
+        $newLabel1.textContent = '개발자 오십일기';
+        $ksmartTeamUl.before($newLabel1);
+        const $newDiv1 = document.createElement('div');
+        const $newLabel2 = document.createElement('label');
+        $newLabel2.textContent = '실습문제';
+        const $newUl1 = document.createElement('ul');
+        $newUl1.id='teamUl';
+        $newDiv1.append($newLabel2, $newUl1);
+        console.log($newDiv1);
+
+        $ksmartTeamUl.after($newDiv1);
+
+        // 팀원 이름 li 태그 생성 후 화면 출력.
+        // • 팀원 : 홍길동 
+        const mName = ['박중연','송영호','최성식','길범진','허준승'];
+        const $newUl2 = document.getElementById('teamUl');
+
+    for (let i = 0; i < mName.length; i++) {
+        $newUl2.innerHTML += `<li>팀원 : ${mName[i]}</li>`;
+    }
+
+        
 
     </script>
 
