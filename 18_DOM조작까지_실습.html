@@ -34,7 +34,53 @@
     // 패턴 {'회원아이디': 'id003', '회원이름': '홍03', '회원연락처': '010-3333-3333'}
 		// array id001~id009 배열을 위의 패턴맞게 생성하시오.
     const memberList = [];
+
+    // 아이디 접근
+    const $newDiv = document.getElementById('memberList');
     
+    // 배열 삽입
+    for(let i = 0; i<10; i++) {
+      const memberInfo = {
+        '회원아이디' : `id${String(i).padStart(3,0)}`, 
+        '회원이름' : `홍${String(i).padStart(2,0)}`, 
+        '회원연락처' : `010-${i}${i}${i}${i}-${String(i).padStart(4,i)}`
+      }
+      memberList.push(memberInfo);  
+    };
+    const $newTable = document.createElement('table');
+    const $newThead = document.createElement('thead');
+    const $newTbody = document.createElement('tbody');
+   const $theadTr = document.createElement('tr');
+
+   // thead
+   for(title in memberList[0]) {
+    const $th = document.createElement('th');
+    $th.textContent = title;
+    $theadTr.appendChild($th);
+   }
+   $newThead.appendChild($theadTr);
+   $newTable.appendChild($newThead);
+   $newDiv.appendChild($newTable);
+
+
+   // tbody
+   memberList.forEach((memberInfo, idx) =>{
+    const $tbodyTr = document.createElement('tr');
+    for(prop in memberInfo) {
+      const $td = document.createElement('td');
+      $td.textContent = memberInfo[prop];
+      $tbodyTr.appendChild($td);
+    
+    }
+    $newTbody.appendChild($tbodyTr);
+   });
+   $newTable.append($newThead, $newTbody);
+   $newDiv.appendChild($newTable);
+  
+
+
+
+      // div에 삽입
 
 	</script>
   <h1>DOM조작 실습</h1>
@@ -62,18 +108,6 @@
   </table> -->
   실습2. tbody 영역에 구구단 테이블을 삽입하시오.
   <script type="text/javascript">
-        
-        /**
-         * 4단 입력시 자료형 예시)
-         * {'2단': '2 X 1 = 02','3단': '3 X 1 = 03','4단': '4 X 1 = 04'}
-         * {'2단': '2 X 2 = 04','3단': '3 X 2 = 06','4단': '4 X 2 = 08'}
-         * {'2단': '2 X 3 = 06','3단': '3 X 3 = 09','4단': '4 X 3 = 12'}
-         * {'2단': '2 X 4 = 08','3단': '3 X 4 = 12','4단': '4 X 4 = 16'}
-         *                      .................
-         * {'2단': '2 X 9 = 18','3단': '3 X 9 = 27','4단': '4 X 9 = 36'}
-         */ 
-
-       
 
   </script>
   <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

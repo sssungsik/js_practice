@@ -135,6 +135,7 @@
             <li></li>    
         </ul>
     </div>
+    <button onclick="testF()">뽑기</button> <label> 잔여 횟수 : <label id="remain"></label></label>
     <script>
         const $ksmartTeamUl = document.getElementById('ksmartTeamUl');
         const $newLiEle1 = document.createElement('li');
@@ -169,10 +170,38 @@
         $newUl2.innerHTML += `<li>팀원 : ${mName[i]}</li>`;
     }
 
+    let remainCount = 5;
+    let $remain = document.getElementById('remain');
+
+    function testF() {
+        if(remainCount >0) {
+        const $newBtn = document.createElement('button');
+        $newBtn.style = "border-radius : 50%";
+        $newBtn.textContent = Math.floor(Math.random() * 100);
+        $newUl2.append($newBtn);
+        remainCount --;
+        $remain.innerHTML = remainCount;
+        } else {
+            alert('잔여횟수없음');
+        }
         
+    }
+
+    // div li 그루핑
+    const $newDiv = document.createElement('div');
+
+    mName.forEach(name => {
+        const $newLiEle = document.createElement('li');
+        $newLiEle.textContent = `팀원 : ${name}`
+        $newDiv.appendChild($newLiEle);
+
+    });
+
+    $newUl1.appendChild($newDiv);
+    
 
     </script>
-
+   
     <h2>복수의 노드 생성과 추가</h2>
     - DocumnetFragment : 노드 객체, 별도의 서브 DOM을 구성하여 
                         기존DOM에 추가하는 목적으로 사용(컨테이너, 돔조각)<br>
@@ -187,20 +216,88 @@
         </ul>
     </div>
     <script>
+        const $domFra = document.createDocumentFragment();
+        const $ksTeam = document.querySelector('#ksTeam');
 
+        mName.forEach(name => {
+        const $newLiEle = document.createElement('li');
+        $newLiEle.textContent = `팀원 : ${name}`;
+        $domFra.append($newLiEle);
+    });
+    $ksTeam.appendChild($domFra);
+    // console.log($domFra);
     </script>
 
     <h2>노드 이동 및 특정 위치에 삽입</h2>
     <h3>insertBefore(새로운노드, 위치)</h3>
     <script>
-        
+        const $exLiEle = document.createElement('li');
+        $exLiEle.textContent = '팀원 : 뉴비';
+        $ksTeam.insertBefore($exLiEle, $ksTeam.children[3]);
+        $ksTeam.insertBefore($exLiEle, null);
+    </script>
+    <h2>노드 이동 </h2>
+    <ul id="exUl">
+        <li>최 <button type="button" class="up">▲</button><button type="button" class="down">▼</button><button type="button" class="fist">맨앞으로</button></li>
+        <li>성 <button type="button" class="up">▲</button><button type="button" class="down">▼</button><button type="button" class="fist">맨앞으로</button></li>
+        <li>식 <button type="button" class="up">▲</button><button type="button" class="down">▼</button><button type="button" class="fist">맨앞으로</button></li>
+        <li>입 <button type="button" class="up">▲</button><button type="button" class="down">▼</button><button type="button" class="fist">맨앞으로</button></li>
+        <li>니 <button type="button" class="up">▲</button><button type="button" class="down">▼</button><button type="button" class="fist">맨앞으로</button></li>
+        <li>다 <button type="button" class="up">▲</button><button type="button" class="down">▼</button><button type="button" class="fist">맨앞으로</button></li>
+    </ul>
+    <script>
+        const $upBtn = document.querySelectorAll('.up');
+        const $downBtn = document.querySelectorAll('.down');
+        const $firstBtn = document.querySelectorAll('.fist');
+
+        $upBtn.forEach(element => {
+            element.onclick = function(){
+                const $targetLi = this.parentNode;
+                const $targetUl = this.closest('ul');
+                if($targetLi == $targetUl.firstElementChild) return;
+                $targetUl.insertBefore($targetLi, $targetLi.previousElementSibling);
+            }
+        });
+
+        $downBtn.forEach(element => {
+            element.onclick = function(){
+                const $targetLi = this.parentNode;
+                const $targetUl = this.closest('ul');
+                if($targetLi == $targetUl.lastElementChild) return;
+                $targetUl.insertBefore($targetLi.nextElementSibling, $targetLi);
+            }
+        });
+
+        $firstBtn.forEach(element => {
+            element.onclick = function(){
+                const $targetLi = this.parentNode;
+                const $targetUl = this.closest('ul');
+                $targetUl.insertBefore($targetLi, $targetLi.firstElementChild);
+            }
+        })
+
     </script>
 
     <h2>노드 교체 및 노드 삭제</h2>
     <h3>replaceChild(새로운 노드, 노드 위치) - 교체</h3>
     <h3>removeChild(노드 위치) - 삭제</h3>
     <script>
+        const $newEleNode = document.createElement('li');
+        $newEleNode.textContent = '팀원 : 뉴비2';
+        // 특정 노드 교체
+        $ksTeam.replaceChild($newEleNode, $ksTeam.lastElementChild);
 
+        // $ksTeam ul태그 마지막 li 요소 삭제
+        $ksTeam.removeChild($ksTeam.lastElementChild);
+
+        
+        
+        // 부모노드 없이 호출시 자식노드 삭제 
+        // 부모노드.innerHTML = '';
+        $ksTeam.replaceChildren();
+        
+        // 특정노드 삭제
+        $ksTeam.remove();
     </script>
 
     <h2>노드복사</h2>
@@ -214,7 +311,21 @@
     </ul>
 
     <script>
-       
+        // const $exClone1 = document.getElementsByClassName('ex-clone'); // html컬렉션 반환
+        const $exClone = document.querySelector('.ex-clone');
+       // const $exClone3 = document.querySelectorAll('.ex-clone'); // lodeList 반환
+        // console.log($exClone1[0]);
+        // console.log($exClone3);
+        
+        console.log($exClone);
+        const $targetNode = $exClone.firstElementChild;
+        const $copyNode1 = $targetNode.cloneNode(); // 인수 없이 호출 default : false
+        console.log($copyNode1);
+        const $copyNode2 = $targetNode.cloneNode(true);
+        console.log($copyNode2);
+
+        $targetNode.append($copyNode1, $copyNode2);
+        
     </script>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>

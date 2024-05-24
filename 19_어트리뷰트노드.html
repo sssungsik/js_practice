@@ -1,150 +1,258 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="data:,">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="data:," />
     <title>어트리뷰트 노드 조작</title>
-</head>
-<body>
+    <style></style>
+  </head>
+  <body>
     <h1>어트리뷰트 노드</h1>
-    - HTML 요소는 여러 개의 어트리뷰트 (속성)을 가질 수 있다.<br>
-    - 어트리뷰트이름 = '어트리뷰트값' 형식으로 정의<br>
-    - 모든 요소노드는 Element.prototype.attribute로 취득 가능<br>
-    - attribute 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티<br>
-    - NamedNodeMap 객체 반환<br>
+    - HTML 요소는 여러 개의 어트리s뷰트 (속성)을 가질 수 있다.<br />
+    - 어트리뷰트이름 = '어트리뷰트값' 형식으로 정의<br />
+    - 모든 요소노드는 Element.prototype.attribute로 취득 가능<br />
+    - attribute 프로퍼티는 getter만 존재하는 읽기 전용 접근자 프로퍼티<br />
+    - NamedNodeMap 객체 반환<br />
 
     <h1>어트리뷰트 종류</h1>
-    - 글로벌 어트리뷰트 : id, class, style, title, data-* 등<br>
-    - 이벤트 핸들러 어트리뷰트: onclick, onchange, onfocus, onblur, oninput 등<br><br>
-    
-    <input type="text" id="ksmart" value="한국스마트정보교육원 신입개발자">
-    
+    - 글로벌 어트리뷰트 : id, class, style, title, data-* 등<br />
+    - 이벤트 핸들러 어트리뷰트: onclick, onchange, onfocus, onblur, oninput
+    등<br /><br />
+
+    <input type="text" id="ksmart" value="한국스마트정보교육원 신입개발자" />
+
     <script>
-      
+      const $ksmart = document.getElementById("ksmart");
+      const attributes = $ksmart.attributes;
+      console.log(attributes.id.value);
+      console.log(attributes.type.value);
     </script>
 
     <h2>HTML 어트리뷰트 조작</h2>
-    - attributes 프로퍼티는 getter만 존재하므로 변경할 수 없다<br>
-    - 요소노드에서 메소드를 통해 조작 가능<br>
-    - Element.prototype.getAttribute / Element.prototype.setAttribute<br>
-    - getAttribute('속성') = 값 반환<br>
-    - setAttribute('속성', '값')<br>
+    - attributes 프로퍼티는 getter만 존재하므로 변경할 수 없다<br />
+    - 요소노드에서 메소드를 통해 조작 가능<br />
+    - Element.prototype.getAttribute / Element.prototype.setAttribute<br />
+    - getAttribute('속성') = 값 반환<br />
+    - setAttribute('속성', '값')<br />
 
-    <input type="text" id="ksStudent" value="경력자같은 신입개발자"/>
+    <input type="text" id="ksStudent" value="경력자같은 신입개발자" />
 
-    <form >
-        <input type="text" name="memberId" value="ksmart51"/>
-        <!-- reset:폼 안에 있는 입력을 받을수 있는 요소들의 초깃값으로 되돌린다 -->
-        <input id="confirmBtn" type="button" value="확인"/>
-        <input type="reset" value="취소"/>
+    <form>
+      <input type="text" name="memberId" value="ksmart51" />
+      <!-- reset:폼 안에 있는 입력을 받을수 있는 요소들의 초깃값으로 되돌린다 -->
+      <input id="confirmBtn" type="button" value="확인" />
+      <input type="reset" value="취소" />
     </form>
 
     <script>
-       
+      const $ksStudent = document.getElementById("ksStudent");
+      const valueAtt = $ksStudent.getAttribute("value");
+      console.log(valueAtt);
+      $ksStudent.setAttribute("value", "밸류 변경");
+
+      const $confirmBtn = document.querySelector("#confirmBtn");
+      $confirmBtn.onclick = function () {
+        const $memberId = document.querySelector('input[name = "memberId"]');
+        $memberId.setAttribute("value", "개발자 51기로 변경됨");
+      };
     </script>
 
     <h2>어트리뷰트 propertie vs DOM propertie</h2>
-    - 어트리뷰트 propertie(초기상태 값 유지)<br>
-    - DOM propertie(동적, 최신상태)<br>
-    
-    <input type="text" id="ks50Student" value="개발자 51기">
+    - 어트리뷰트 propertie(초기상태 값 유지)<br />
+    - DOM propertie(동적, 최신상태)<br />
+
+    <input type="text" id="ks51Student" value="개발자 51기" />
     <button type="button" id="exBtn">프로퍼티 확인</button>
-    
+
     <script>
-        
+      const $exBtn = document.querySelector("#exBtn");
+      $exBtn.onclick = function () {
+        const $ks51Student = document.getElementById("ks51Student");
+        const attrPropValue = $ks51Student.getAttribute("value");
+        const domPropValue = $ks51Student.value;
+        const print = ` 어트리뷰트 프로퍼티 : ${attrPropValue} \n 돔 프로퍼티 : ${domPropValue}`;
+        alert(print);
+      };
     </script>
 
     <h2>data 어트리뷰트와 dataset 프로퍼티</h2>
-    - HTML 요소에 정의한 사용자 정의 어트리뷰트와 자바스크립트 간에 데이터를 
-        교환<br>
-    - data 어트리뷰트의 값은 dataset 프로퍼티로 취득가능<br>
-    - 해당 요소에 특정한 데이터를 잠시 저장하는 용도<br>
+    - HTML 요소에 정의한 사용자 정의 어트리뷰트와 자바스크립트 간에 데이터를
+    교환<br />
+    - data 어트리뷰트의 값은 dataset 프로퍼티로 취득가능<br />
+    - 해당 요소에 특정한 데이터를 잠시 저장하는 용도<br />
 
-    <button id="addGoodsBtn" 
-            type="button"
-            data-seller-id="id001" 
-            data-goods-code="g001"
-            data-goods-name="모니터" 
-            data-goods-price="1000000">상품등록</button>
-    
+    <button
+      id="addGoodsBtn"
+      type="button"
+      data-seller-id="id001"
+      data-goods-code="g001"
+      data-goods-name="모니터"
+      data-goods-price="1000000"
+    >
+      상품등록
+    </button>
+
     <div class="ex-data"></div>
     <script>
-        
-        
-        // 실습1. ex-data 클래스 요소에 다음과 같이 텍스트노드를 삽입하시오.
-        // goodsCode:"g001", goodsName: "모니터", goodsPrice:"1000000", sellerId:"id001"
-        
+      const $addGoodsBtn = document.querySelector("#addGoodsBtn");
+      console.log($addGoodsBtn.dataset);
+
+      // 실습1. ex-data 클래스 요소에 다음과 같이 텍스트노드를 삽입하시오.
+      // goodsCode:"g001", goodsName: "모니터", goodsPrice:"1000000", sellerId:"id001"
+      $addGoodsBtn.onclick = function () {
+        const $exdata = document.querySelector(".ex-data");
+        const dataset = this.dataset;
+        $exdata.replaceChildren();
+        const $newUl = document.createElement("ul");
+        for (const key in dataset) {
+          const $li = document.createElement("li");
+          $li.textContent = `${key} : ${dataset[key]}`;
+          $newUl.appendChild($li);
+        }
+        $exdata.appendChild($newUl);
+
+        // ul>li 속성만큼 li 생성
+      };
     </script>
-    <br>
+    <br />
     <!-- 실습. data속성을 값을 활용하여 아래 #teamUl요소 안 list완성하시오-->
     <!-- ex:) teamName : 우리는 하나다 -->
-    <button id="teamBtn"
-            type="button"
-            data-team-name="우리는 하나다"
-            data-team1="김영희"
-            data-team2="이철수"
-            data-team3="홍길동"
-            >팀구성</button>
-    <ul id="teamUl">
-    </ul>
+    <button
+      id="teamBtn"
+      type="button"
+      data-team-name="우리는 하나다"
+      data-team1="김영희"
+      data-team2="이철수"
+      data-team3="홍길동"
+    >
+      팀구성
+    </button>
+    <ul id="teamUl"></ul>
     <script type="text/javascript">
-        
+      const $teamBtn = document.getElementById("teamBtn");
+      $teamBtn.onclick = function () {
+        const $teamUl = document.getElementById("teamUl");
+        const $domFra = document.createDocumentFragment();
+        const dataset = this.dataset;
+        $teamUl.innerHTML = "";
+
+        for (const key in dataset) {
+          const $newLi = document.createElement("li");
+          $newLi.textContent = `${key} : ${dataset[key]}`;
+          $teamUl.appendChild($newLi);
+        }
+        $teamUl.appendChild($domFra);
+      };
     </script>
-   
+
     <h2>스타일</h2>
 
     <h3>인라인 스타일 조작</h3>
-    - HTMLElement.prototype.style: setter와 getter 모두 존재하는 접근자 프로퍼티<br>
-    <div class="ksmart-team">
-        <div>
-            <span>배려와 존중이 넘치는 한국스마트정보교육원</span>
-            <ul>
-                <li>가이드: 이형열 선생님</li>
-            </ul>
-        </div>
+    - HTMLElement.prototype.style: setter와 getter 모두 존재하는 접근자
+    프로퍼티<br />
+    <div class="ksmart-team" style="background-color: red; color: azure">
+      <div>
+        <span>배려와 존중이 넘치는 한국스마트정보교육원</span>
+        <ul>
+          <li>가이드: 이형열 선생님</li>
+        </ul>
+      </div>
     </div>
     <script>
-        
+      const $ksmartTeam = document.querySelector(".ksmart-team");
+      console.log($ksmartTeam.style);
+      console.log($ksmartTeam.style.color);
+      console.log($ksmartTeam.style["background-color"]);
+      /*
+        $ksmartTeam.style.color = 'white';
+        $ksmartTeam.style.fontWeight = 'bold';
+        $ksmartTeam.style.position = 'relative';
+        $ksmartTeam.style.width = '400px';
+        $ksmartTeam.style.height = '100px';
+        $ksmartTeam.style.display = 'flex';
+        $ksmartTeam.style.justifyContent = 'center';
+        $ksmartTeam.style.alignItems = 'center';
+        */
+
+      const $ksmartTeamDiv = $ksmartTeam.querySelector("div");
+      $ksmartTeamDiv.style.border = "1px dotted blue";
+      $ksmartTeamDiv.style.width = "330px";
+      $ksmartTeamDiv.style.padding = "5px";
     </script>
 
     <h2>클래스 조작</h2>
     <h3>className</h3>
-    - HTMLElement.prototype.className: setter와 getter 모두 존재하는 접근자 프로퍼티<br>
-    - 클래스 변경 : replace('변경할 클래스명', '새로운 클래스명')<br>
+    - HTMLElement.prototype.className: setter와 getter 모두 존재하는 접근자
+    프로퍼티<br />
+    - 클래스 변경 : replace('변경할 클래스명', '새로운 클래스명')<br />
 
     <p class="p-ksmart">한국스마트정보교육원 51기</p>
-    
+    <style>
+      p.text-blue {
+        color: blue;
+      }
+      p.text-red {
+        color: red;
+      }
+    </style>
     <script>
-
+      const $pKsmart = document.querySelector(".p-ksmart");
+      $pKsmart.className += " text-blue";
+      console.log($pKsmart.className);
+      $pKsmart.className = $pKsmart.className.replace("text-blue", "");
     </script>
 
     <h3>classList</h3>
-    - HTMLElement.prototype.classList: setter와 getter 모두 존재하는 접근자 프로퍼티<br>
-    - 클래스 추가 : add('클래스명')<br>
-    - 클래스 삭제 : remove('클래스명')<br>
-    - 특정 클래스 가져오기 : item('index 번호')<br>
-    - 특정 클래스 포함여부 : contains('클래스명')<br>
-    - 클래스 변경 : replace('변경할 클래스명', '새로운 클래스명')<br>
-    - 클래스 제거 및 추가 : toggle('대상 클래스명') #대상 클래스명과 일치하는 클래스명 삭제하고 일치하는 클래스명이 없으면 추가<br>
-                           ex: toggle('클래스명') <br>
-                               인수 1개 일 경우 클래스명이 없을 경우 추가, 클래스명이 있을 경우 삭제 <br>
-                               toggle('클래스명', boolean) <br>
-                               인수 2개 일 경우 true:클래스명 추가, false: 클래스명 삭제 <br>
-        
+    - HTMLElement.prototype.classList: setter와 getter 모두 존재하는 접근자
+    프로퍼티<br />
+    - 클래스 추가 : add('클래스명')<br />
+    - 클래스 삭제 : remove('클래스명')<br />
+    - 특정 클래스 가져오기 : item('index 번호')<br />
+    - 특정 클래스 포함여부 : contains('클래스명')<br />
+    - 클래스 변경 : replace('변경할 클래스명', '새로운 클래스명')<br />
+    - 클래스 제거 및 추가 : toggle('대상 클래스명') #대상 클래스명과 일치하는
+    클래스명 삭제하고 일치하는 클래스명이 없으면 추가<br />
+    ex: toggle('클래스명') <br />
+    인수 1개 일 경우 클래스명이 없을 경우 추가, 클래스명이 있을 경우 삭제 <br />
+    toggle('클래스명', boolean) <br />
+    인수 2개 일 경우 true:클래스명 추가, false: 클래스명 삭제 <br />
+
     <p class="ksmart-dev">글로벌 최상위 1% ICT 전문가</p>
     <script>
-        
-        
-        /**
-         *  toggle('클래스명')
-         *    - 인수로 삽입된 클래스명이 존재할 경우 삭제
-         *    - 인수로 삽입된 클래스명이 존재하지 않을 경우 추가
-         *  toggle('클래스명', boolean(비교연산자))
-         *    - 두번째 인수 값이 true : 추가
-         *    - 두번째 인수 값이 false : 삭제
-         */
-        
-    </script>
+      const $ksmartDev = document.querySelector(".ksmart-dev");
+      const classList = $ksmartDev.classList;
+      // 클래스추가
+      classList.add("text-blue");
+      classList.add("ksmart-51");
+      // 클래스제거
+      classList.remove("ksmart-51");
+      // 클래스리스트 목록
+      console.log(classList.item(1));
+      // 존재 여부
+      console.log(classList.contains("text-blue")); // true
+      console.log(classList.contains("ksmart-51")); // false
+      // replace
+      classList.replace("text-blue", "text-red");
 
-</body>
+
+      /**
+       *  toggle('클래스명')
+       *    - 인수로 삽입된 클래스명이 존재할 경우 삭제
+       *    - 인수로 삽입된 클래스명이 존재하지 않을 경우 추가
+       *  toggle('클래스명', boolean(비교연산자))
+       *    - 두번째 인수 값이 true : 추가
+       *    - 두번째 인수 값이 false : 삭제
+       */
+
+       classList.toggle('text-red');
+       console.log(classList);
+       classList.toggle('text-red');
+       console.log(classList);
+       classList.toggle('text-red', false); // false 일 경우 삭제 
+       console.log(classList);
+       classList.toggle('text-red', true); // true 일 경우 추가
+       console.log(classList);
+
+    </script>
+  </body>
 </html>
