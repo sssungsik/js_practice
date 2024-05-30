@@ -547,6 +547,33 @@
       })
     </script>
 
+    <h2>디바운스</h2>
+    - 자바스크립트 이벤트핸들러 지연시키는 것
+    <input type="text" id="exText"/>
+
+    <script>
+      const $exText = document.getElementById('exText');
+      // 디바운스 적용 전
+      /*
+      $exText.addEventListener('input',(e) =>{
+        console.log(e.target.value);
+      });
+      */
+
+      // 디바운스 적용 함수
+      const debounce = (callback, delay=500) => {
+        let timer;
+        return event=> {
+          if(timer) clearTimeout(timer);
+          setTimeout(callback, delay, event);
+        }
+      };
+      $exText.addEventListener('input',debounce((e) => {
+        console.log(e.target.value);
+      }));
+    </script>
+
+
     <h2>동적바인딩</h2>
     - 이벤트에 의하여 생성된 요소에 이벤트 부여 (이벤트 버블링 활용)
     <table>

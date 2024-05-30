@@ -11,6 +11,7 @@
     /* 비활성: display:none */
     /* 활성 display:flex; */
     display:none; 
+    
 }
 .popup{
     width:100%;               /*반응형 : 가로값은 100%*/

@@ -17,19 +17,63 @@
       <button type="button">계산하기</button>
     </form>
 
+    <form name="myNum2">
+      <input type="text" name="n3" /> <select><option>더하기</option><option>빼기</option></select> <input type="text" name="n4" /> =
+      <input type="text" name="result2" readonly />
+      <button type="button">계산하기</button>
+    </form>
+
     <script type="text/javascript">
       const $n1 = document.querySelector('form[name="myNum"]>input[name="n1"]');
 
       const $n2 = document.querySelector('form[name="myNum"]>input[name="n2"]');
 
       const $btn = document.querySelector('form[name="myNum"]>button');
-      const $result = document.querySelector(
-        'form[name="myNum"]>input[name="result"]'
-      );
-      const $resultVal = $result.value;
+      const $result = document.querySelector('form[name="myNum"]>input[name="result"]');
+
       $btn.addEventListener("click", function () {
         $result.value = Number($n1.value) * Number($n2.value);
+        $result.style.backgroundColor = 'aquamarine';
       });
+      $btn.addEventListener('blur', function(){
+        $result.value = "";
+        $n1.value = "";
+        $n2.value = "";
+        $result.style.backgroundColor = 'white';
+
+      })
+
+      const $n3 = document.querySelector('form[name="myNum2"]>input[name="n3"]');
+
+      const $n4 = document.querySelector('form[name="myNum2"]>input[name="n4"]');
+
+      const $btn3 = document.querySelector('form[name="myNum2"]>button');
+      const $result2 = document.querySelector('form[name="myNum2"]>input[name="result2"]');
+      const $option = document.querySelector('form[name="myNum2"]>select');
+
+      $btn3.addEventListener("click", function () {
+        if($option.value == '더하기') {
+        $result2.value = Number($n3.value) + Number($n4.value);
+        $result2.style.backgroundColor = 'aquamarine';
+        }else {
+          $result2.value = Number($n3.value) - Number($n4.value);
+        $result2.style.backgroundColor = 'aquamarine';
+        }
+
+      });
+      $btn3.addEventListener('blur', function(){
+        $result2.value = "";
+        $n3.value = "";
+        $n4.value = "";
+        $result2.style.backgroundColor = 'white';
+
+      });
+
+
+
+
+
+
     </script>
 
     <h2>실습2</h2>
@@ -75,8 +119,9 @@
         const $caption = document.createElement("caption");
         const $inputVal = document.getElementById("times");
 
+        if ($inputVal.value < 10 && $inputVal.value > 1) {
         for (let i = 1; i < 10; i++) {
-          3;
+        
           $caption.textContent = `${$inputVal.value} 단`;
           const $tr = document.createElement("tr");
           const $td = document.createElement("td");
@@ -90,6 +135,9 @@
 
           $sec.appendChild($table);
         }
+      } else {
+        alert('2~9 사이의 값만 입력해라....');
+      }
       });
     </script>
 
@@ -190,6 +238,65 @@
           });
         }
       });
+      
+      const openModal = () => {
+        const $popup = document.querySelector('#popup');
+        $popup.style.display = 'flex';
+      }
+      const closeModal = () => {
+        const $popup = document.querySelector('#popup');
+        $popup.style.display = 'none';
+      }
+
+      const addCate = () => {
+        const $tbody = document.querySelector('#checkTbody');
+        const $input = document.querySelector('.cateContent');
+        const $inputVal = $input.value;
+        const addRow = (selector, value) => {
+          const $tr = document.createElement('tr');
+          const $td = document.createElement('td');
+          const $inp = document.createElement('input');
+          $inp.type = 'checkbox';
+          $inp.setAttribute('class', 'mCheck');
+          const $textNode = document.createTextNode(value);
+          $td.append($inp, $textNode);
+          $tr.appendChild($td);
+          selector.appendChild($tr);
+        }
+
+        if(!$inputVal) {
+          alert('카테고리 입력');
+          $input.focus();
+          return;
+        }
+        addRow($tbody, $inputVal);
+		$input.value = $inputVal + 1 + 1;
+		
+
+       
+      };
+	  const $tbody = document.querySelector('#checkTbody');
+      const $addCateBtn = document.querySelector('#addCateBtn');
+      const $confirm = document.querySelector('#confirm');
+      const $close = document.querySelector('#close');
+
+      $addCateBtn.addEventListener('click', openModal);
+      $confirm.addEventListener('click', addCate);
+      $close.addEventListener('click', closeModal);
+      
+      $tbody.addEventListener('click', (e) => {
+			const target = e.target;
+			if(!target.classList.contains('mCheck')) return;
+			const $mchecks = document.querySelectorAll('.mCheck');
+			const $checkedE = document.querySelectorAll('.mCheck:checked');
+			$allCheck.checked = ($mchecks.length == $checkedE.length);
+
+      })
+      
+
+
+
+    
     </script>
 
     <h2>실습5</h2>
