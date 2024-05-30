@@ -5,10 +5,18 @@
 	<title>제이쿼리</title>
 	<link rel="shortcut icon" href="#" type="image/x-icon">
 	<!-- 다운로드방식 -->
+	<script src="js/jquery-3.7.1.js"></script>
 	
 	<!-- CDN방식 -->
+
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script> -->
 	
 	<script>
+		console.log(jQuery());
+		console.log($());
+
+		
+		
 	</script>
 </head>
 <body>
@@ -16,15 +24,20 @@
 	- 경량화, 호환성, 애니메이션 효과등 포함된 자바스크립트 라이브러리 <br>
 	- css 선택자를 활용하여 dom 객체를 쉽게 접근 할 수 있도록 만들어 졌다. <br>
 	- 기본 자바스크립트를 가지고 만들어진 라이브러리임으로 제이쿼리 외부파일을 로드 시켜야한다. <br>
-	
-	<script type="text/javascript">
-	</script>
 
 	<h2>onload -> ready 메서드</h2>
 	- 문서 로딩 완료 이후에 실행되는 메서드
 
 	<script type="text/javascript">
+		// 문서가 최종 랜더링 후에 실행하는 함수 
+		$(document).ready(function(){
+			// console.log($('h2'));
+		});
+		$(function(){
+			// console.log($('h2'));
+		})
 
+		// 두 개가 같다.
 	</script>
 	
 	<h2> 직접 선택자 </h2>
@@ -35,6 +48,10 @@
 	([body, h1, div] -> 클릭 -> 검색된 모든 대상에 click 이벤트가 등록)
 	
 	<script type="text/javascript">
+		console.log($('body')); // jquery 객체
+		console.log($('body')[0]); // 자바스크립트 HTML Element 상속받은 객체
+		console.log($('body123')); // 0
+		// console.log($('h2'));
 
 	</script>
 	
@@ -48,7 +65,18 @@
 	<button type="button" class="myBtn">버튼5</button>
 	
 	<script type="text/javascript">
+		$('#testBtn').click(function(){
+			console.log(this.textContent);
+			console.log($(this).text());
+		});
 
+		console.log($('.myBtn'));
+
+		$('.myBtn').click( e => {
+			const target = e.target;
+			const text = $(target).text();
+			console.log(text);
+		});
 	</script>
 	
 	<h2>이벤트 메서드</h2>
@@ -57,15 +85,57 @@
 	- 많이 쓰이는 이벤트 종류 : click, change, blur, keyup, keydown, keypress... 등 <br>
 	
 	<button type="button" id="myBtn01">버튼</button>
-	<input type="text" id="myInput">
+	<input type="text" id="myInput1">
+	<input type="text" id="myInput2">
+	<input type="text" id="myInput3">
 	
 	<script type="text/javascript">
-		
+		$('#myBtn01').on('click',function(){
+			console.log($(this).text(), '클릭');
+		})
+
+
+		/* 1.  on('이벤트 타입1 이벤트 타입2 ....n', callBack) */
+		$('#myInput1').on('input blur', function(){
+			console.log($(this).val());
+		})
+
+		/* 2.  on({
+				"이벤트 타입1 이벤트 타입2 ": function(){} 
+		})*/	
+		const inputInfo = {
+			'input blur' : function(){
+				console.log($(this).val());
+			}
+		}
+		$('#myInput2').on(inputInfo);
+
+		/* 3.  on({
+				"이벤트 타입1" : function(){},
+				"이벤트 타입2" : function(){}
+		})*/
+		const inputInfo2 = {
+			'input' : function(){
+				console.log('input 이벤트', $(this).val());
+			},
+			'blur' : function(){
+				console.log('blur 이벤트', $(this).val());
+			}
+		}
+		$('#myInput3').on(inputInfo2);
+
+
+		// 강제 이벤트 실행
+		$('#myBtn01').click();
+		$('#myBtn01').trigger('click');
+
+		// 등록된 이벤트 핸들러 제거
+		$('#myBtn01').off('click');
 	</script>
 	
 	<h2>인접 관계 선택자</h2>
 	- 상하요소 검색 <br>
-	- parentElement -> .parent(), .parents('부요 요소 선택자') <br>
+	- parentElement -> .parent(), .parents('부요 요소 선택자'), closest('css 선택자') <br>
 	- querySelector, querySelectorAll -> .find('선택자'), .children() <br>
 	<ul class="ul1">
 		<li>
@@ -106,6 +176,47 @@
 	<p class="txt6">내용6</p>
 
 	<script type="text/javascript">
+
+		$('.liBtn').click( function(){
+			// parent() 부모 노드 탐색
+			const $li = $(this).parent();
+			console.log($li[0].className);
+
+			// parents('css선택자') 조상 노드 탐색
+			const $ulEles = $(this).parents('ul');
+			console.log($ulEles);
+
+			// closest('css 선택자') 조상 노드 중 가장 인접한 요소만 탐색
+			const $ul = $(this).closest('ul');
+			console.log($ul);
+
+			// children() 자식노드 취득
+			console.log($ul.children(), 'children()');		
+
+			// children('css 선택자') 자식 노드중 css 선택자에 해당하는 요소 취득
+			console.log($ul.children('.li2'), 'children(.li2)');		
+
+			// find('css 선택자') 자손 노드 중 css 선택자에 해당하는 요소 취득
+			console.log($ul.find('button'), 'find()');
+
+			// 형제 노드
+			const $li2 = $ul.find('.li2');
+			// prev() 이전 형제 노드 취득
+			console.log($li2.prev(), 'prev()');
+			// next() 이후 형제 노드 취득
+			console.log($li2.next(), 'next()');
+			// siblings() 형제노드 전체 취득
+			console.log($li2.siblings(), 'siblings()');
+
+			// 위치 탐색
+			// first() 탐색한 li태그 목록 중 첫 번째 li 반환
+			console.log($('ul.ul2 li').first(), 'first()');
+			// first() 탐색한 li태그 목록 중 마지막 li 반환
+			console.log($('ul.ul2 li').last(), 'last()');
+			// eq(인덱스)
+			console.log($('ul.ul2 li').eq(1), 'eq(1)');
+
+		});
 
 	</script>
 	
