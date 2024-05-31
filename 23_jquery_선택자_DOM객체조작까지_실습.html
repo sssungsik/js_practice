@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>jquery 실습</title>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script  src="js/jquery-3.7.1.js"></script>
 </head>
 <body>
 	<h1>인접관계 선택자 실습</h1>
@@ -21,7 +21,14 @@
 		</li>
 	</ul>
 	<script type="text/javascript">
-
+		$('.delBtn').click(function(){
+			let button = $('.delBtn').length;
+			if(button > 1) {
+			$(this).parent().remove();
+			} else {
+				alert('한개는 남겨라');
+			}
+		})
 	</script>
 	
 	<h2>실습2</h2>
@@ -51,6 +58,9 @@
 	</ul>
 	
 	<script type="text/javascript">
+		$('.cBtn').click(function() {
+			$(this).parent().siblings('.text').text('ksmart');
+		});
 
 	</script>
 	
@@ -64,6 +74,11 @@
 			<tr>
 				<th>
 					<input type="checkbox" id="allCheck">전체체크
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<button type="button" id="addCate" style="width: 100%;">항목추가</button>
 				</th>
 			</tr>
 		</thead>	
@@ -89,6 +104,40 @@
 	
 	<script type="text/javascript">
 
+		$('#allCheck').click(function(){
+			const isChecked = $(this).prop('checked');
+			$('.checks').prop('checked', isChecked);
+		});
+
+		$('.checks').click(function(){
+			$('#allCheck').prop('checked',
+			$('.checks').length == $('.checks:checked').length);
+		})
+
+		$('#addCate').click(function(){
+			const $tbody = $(this).closest('table').find('tbody');
+			const cnt = $tbody.children().length;
+			const $td = $('<td></td>');
+			const $tr = $('<tr></tr>');
+			const $input = $('<input />', {
+													'type' : 'checkbox',
+													'class' : 'checks'
+
+			});
+			$td.append($input, `행${cnt + 1}`);
+			
+			$tr.append($td);
+
+			$tbody.append($tr);
+		});
+
+		$('#delCheckBtn').click(function(){
+			$('.checks:checked').closest('tr').remove();
+			$('#allCheck').prop('checked', false);
+	
+			
+		})
+	
 	</script>
 	
 	<h2>실습4</h2>
@@ -96,7 +145,39 @@
 	<br>
 	<button type="button" id="bgChange">배경색 변환</button>
 	<script>
+		$('#bgChange').click(function(){
+			
+			const backColor = $('body').css('background-color');
+			
+				let i = 1;
+				if(i == 1) {
+					$('body').css('color', 'red');
+					i=2;
+				} else if (i == 2) {
+					$('body').css('color', 'blue');
+					i=3
+				} else if ( i== 3){
+					$('body').css('color', 'green');
+					i=0
+				}
+			
 
+
+
+			switch (backColor) {
+				case 'rgb(255, 0, 0)':
+				$('body').css('background-color', 'blue');
+					break;
+			
+				case 'rgb(0, 0, 255)':
+				$('body').css('background-color', 'green');
+					break;
+			
+				default:
+				$('body').css('background-color', 'red');
+					break;
+			}
+		})
 	</script>
 	
     <h2>실습5</h2>
