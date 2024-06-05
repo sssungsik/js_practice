@@ -30,7 +30,46 @@
     - done :  http 요청 성공하면 요청한 데이터 done(data)메소드에 전달<br>
     - fail :  http 요청 실패하면 오류와 상태에 관한 정보가 fail(jqXHR, textStatus)메소드에 전달<br>
     - always :  http 요청 성공하거나 실패하는 것에 상관없이 always()메소드 항상실행<br><br><br>
-    
+    <button id="jqAjax" type="button" class="btn btn-danger ml-3">ajax 실습</button>
+    <br>
+    <script>
+        $('#jqAjax').click(function(){
+            // $.ajax({
+            //     method : 'GET',
+            //     url: './24_비동기통신_fetch_ex.json',
+            //     dataType : 'json',
+            //     success : function(data){
+            //         console.log(data);
+            //         for(key in data){
+            //             console.log(`${key} : ${data[key]}`);
+            //         }
+            //     },
+            //     error : function(jqXHR, status, error){
+            //         console.log(jqXHR);
+            //         console.log(status);
+            //         console.log(error);
+            //     }
+            // });
+            const request = $.ajax({
+                method : 'GET',
+                url: './24_비동기통신_fetch_ex.json',
+                dataType : 'json'
+            });
+            request.done(function(data){
+                console.log(data);
+            });
+            request.fail(function(jqXHR, textStatus, error){
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(error);
+            });
+            request.always(function(){
+                console.log('항상 콜백 호출');
+            });
+        });
+
+    </script>
+
     - 공공 API <br>
       - 사이트 : https://www.data.go.kr<br>
       - data: 기상청_단기예보 ((구)_동네예보) 조회서비스<br>
@@ -83,6 +122,7 @@
         </div>   
     </div>
 	<script type="text/javascript">
+
         /*
             POP	강수확률	%	8
             PTY	강수형태	코드값	4
@@ -108,7 +148,96 @@
             - API 제공 시간(~이후) : 02:10, 05:10, 08:10, 
                                 11:10, 14:10, 17:10, 20:10, 23:10
         */
-        
+        $('#exAjax').click(function (){
+            const nowDate = moment();
+            let baseDate = nowDate.format('YYYYMMDD');
+            let baseTime = Number(nowDate.format('HHmm'));
+            if(baseTime > 2310){
+                baseTime = '2300';
+            }else if(baseTime > 2010 ) {
+                baseTime = '2000';
+            }else if(baseTime > 1710 ) {
+                baseTime = '1700';
+            }else if(baseTime > 1410 ) {
+                baseTime = '1400';
+            }else if(baseTime > 1110 ) {
+                baseTime = '1100';
+            }else if(baseTime > 810 ) {
+                baseTime = '0800';
+            }else if(baseTime > 510 ) {
+                baseTime = '0500';
+            }else if(baseTime > 210 ) {
+                baseTime = '0200';
+            }else{
+                baseDate = nowDate.subtract(1, 'd').format('YYYYMMDD');
+                baseTime = '2300';
+            }
+            const param = {
+                'serviceKey' : '4Zse+gqwXlu4wvxfw5ORBsVICpSOEKI1mVtF4U2bWZ7c7g8SDx5BKxUstl13TUxUPGdJf/Iqn1Dj31rCWbpIQw==',
+                'numOfRows' : '60',
+                'pageNo' : '1',
+                'dataType' : 'JSON',
+                'base_date' : baseDate,
+                'base_time' : baseTime,
+                'nx' : '63',
+                'ny' : '89'
+            }
+            const request = $.ajax({
+                method : 'GET',
+                url : 'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst',
+                data : param,
+                dataType: 'json'
+            });
+            request.done(data => {
+                console.log(data.response.body.items.item);
+                console.log(moment().add(1, 'h').format('YYYYMMDD'));
+                console.log(moment().add(1, 'h').format('HH00'));
+                const fcstList = data.response.body.items.item;
+                const fcstDate = moment().add(1, 'h').format('YYYYMMDD');
+                const fcstTime = moment().add(1, 'h').format('HH00');
+
+                const fcstInfo = {};
+                fcstList.reduce((acc, cur) => {
+                    const fcstObj = cur;
+                    if(    fcstObj.fcstDate == fcstDate
+                        && fcstObj.fcstTime == fcstTime){
+                        const cate = fcstObj.category;
+                        acc[cate] = fcstObj.fcstValue;
+                    }
+                    return acc;
+                }, fcstInfo);
+
+                fcstInfo.curDate = moment(`${fcstDate} ${fcstTime}`).format('YYYY년 MM월 DD일 HH시 mm분 예보.')
+                console.log(fcstInfo);
+                for(const key in fcstInfo){
+                    $(`#${key}`).val(fcstInfo[key]);
+                }
+                const tmp = fcstInfo.TMP;
+                const sky = fcstInfo.SKY;
+                let skyVal;
+                const pop = fcstInfo.POP;
+                const hum = fcstInfo.REH;
+                switch (sky) {
+                    case '1' :
+                        skyVal = '맑음';
+                    break;
+                }
+
+                $('#curTemp').val(`${tmp}℃`);
+                $('#curSky').val(skyVal);
+                $('#proRain').val(`${pop}%`);
+                $('#humidity').val(`${hum}%`);
+            });
+            request.fail((jqXHR, textStatus, error) => {
+                console.log(jqXHR, textStatus, error);
+            });
+
+
+        });
+
+
+
+
 	</script>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 </body>
